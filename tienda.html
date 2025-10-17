@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ConectaLab — Tienda de ESP32, Arduino y accesorios</title>
+  <meta name="description" content="ConectaLab: módulos ESP32, placas Arduino, sensores, adaptadores y todo para tus proyectos. Elegante y con movimiento." />
+  <style>
+    /* Reset y tipografía */
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#00d1ff; --muted:#9aa6b2; --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,209,255,0.06), transparent),
+                  radial-gradient(900px 400px at 90% 80%, rgba(255,0,150,0.03), transparent),
+                  var(--bg);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      padding:32px;
+      line-height:1.4;
+    }
+
+    .container{max-width:1180px;margin:0 auto}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;padding:18px 0 30px;
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{
+      width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#8b5cf6);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#021022;box-shadow:0 6px 20px rgba(0,0,0,0.6);
+    }
+    .brand h1{font-size:20px;letter-spacing:0.4px}
+    .brand p{color:var(--muted);font-size:13px;margin-top:4px}
+
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-bottom:28px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:var(--radius);box-shadow:0 10px 40px rgba(2,6,23,0.6);backdrop-filter:blur(6px)}
+    .hero h2{font-size:30px;margin-bottom:10px}
+    .hero p{color:var(--muted);margin-bottom:18px}
+    .cta{display:inline-block;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#7c5cff);color:#021022;font-weight:700;text-decoration:none}
+
+    /* Productos */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);padding:18px;border-radius:12px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+    .card .tag{position:absolute;right:12px;top:12px;background:var(--glass);padding:6px 10px;border-radius:999px;font-size:12px;color:var(--muted)}
+    .card h3{margin-top:8px;margin-bottom:8px}
+    .price{font-weight:800;margin-top:8px}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* Floating whatsapp */
+    .whatsapp{
+      position:fixed;right:22px;bottom:22px;width:64px;height:64px;border-radius:20px;background:linear-gradient(180deg,#25D366,#128C7E);display:flex;align-items:center;justify-content:center;box-shadow:0 18px 40px rgba(0,0,0,0.4);z-index:60;border:4px solid rgba(255,255,255,0.04)
+    }
+    .whatsapp img{width:36px;height:36px}
+
+    footer{margin-top:36px;text-align:center;color:var(--muted)}
+
+    /* Animaciones decorativas */
+    .decor-bubble{position:absolute;border-radius:50%;filter:blur(18px);opacity:0.45;mix-blend-mode:screen}
+    .bubble-1{width:220px;height:220px;left:-60px;top:-60px;background:linear-gradient(135deg, rgba(0,209,255,0.12), rgba(124,92,255,0.06));animation:float1 9s ease-in-out infinite}
+    .bubble-2{width:120px;height:120px;right:-30px;bottom:80px;background:linear-gradient(135deg, rgba(255,0,150,0.09), rgba(255,180,0,0.03));animation:float2 11s ease-in-out infinite}
+    .circuit-line{position:absolute;left:50%;top:50%;width:1200px;height:1200px;transform:translate(-50%,-50%) rotate(15deg);pointer-events:none;opacity:0.03}
+
+    @keyframes float1{0%{transform:translateY(0)}50%{transform:translateY(-22px) translateX(8px)}100%{transform:translateY(0)}}
+    @keyframes float2{0%{transform:translateY(0)}50%{transform:translateY(32px) translateX(-8px)}100%{transform:translateY(0)}}
+
+    /* responsive */
+    @media (max-width:980px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:650px){.grid{grid-template-columns:1fr}.container{padding:0 18px} header{flex-direction:column;gap:12px} .brand p{display:none}}
+
+    /* micro-interacciones */
+    .card:hover{transform:translateY(-8px);transition:all .28s cubic-bezier(.2,.9,.3,1)}
+    .cta:active{transform:translateY(1px)}
+
+    /* ribbon label */
+    .coming{display:inline-block;margin-top:14px;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#ffb86b,#ff6bcb);color:#021022;font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">CL</div>
+        <div>
+          <h1>ConectaLab</h1>
+          <p>Tienda de ESP32 • Arduino • Sensores • Accesorios</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#productos">Productos</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card" aria-hidden="false">
+        <h2>Componentes para tus proyectos — rápidos y confiables</h2>
+        <p>ESP32, Arduino, sensores, módulos Wi‑Fi/Bluetooth, adaptadores, fuentes y todo lo que necesitas para crear, prototipar y producir.</p>
+        <a class="cta" href="#productos">Ver productos</a>
+        <div style="margin-top:16px" class="small">Envíos y soporte técnico — asesoría para tus prototipos</div>
+      </div>
+
+      <aside style="position:relative">
+        <div class="card" style="padding:22px;min-height:220px">
+          <div style="display:flex;align-items:center;gap:14px">
+            <svg width="68" height="68" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="22" height="22" rx="6" stroke="url(#g)" stroke-width="1.2" fill="rgba(255,255,255,0.02)"/><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#00D1FF"/><stop offset="1" stop-color="#7C5CFF"/></linearGradient></defs></svg>
+            <div>
+              <div style="font-weight:800">Asesoría a medida</div>
+              <div class="small">¿No estás seguro qué elegir? Te ayudamos a escoger los módulos y accesorios.</div>
+            </div>
+          </div>
+          <div style="margin-top:14px"><span class="coming">NUEVO</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- decorativas -->
+    <div class="decor-bubble bubble-1"></div>
+    <div class="decor-bubble bubble-2"></div>
+
+    <section id="productos">
+      <h2 style="margin-bottom:14px">Productos destacados</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="tag">ESP32</div>
+          <svg width="100%" height="80" viewBox="0 0 600 80" preserveAspectRatio="xMidYMid meet" style="opacity:0.95"><g fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="0.9"><rect x="12" y="12" width="120" height="56" rx="8" stroke="rgba(255,255,255,0.06)" fill="rgba(255,255,255,0.01)"/></g></svg>
+          <h3>ESP32 Dev Kit</h3>
+          <div class="small">Módulo dual‑core con Wi‑Fi y Bluetooth. Perfecto para IoT y prototipos.</div>
+          <div class="price">$24.99</div>
+        </article>
+
+        <article class="card">
+          <div class="tag">Arduino</div>
+          <h3>Arduino UNO R3</h3>
+          <div class="small">Placa clásica para aprendizaje y prototipos. Compatible con shields y librerías.</div>
+          <div class="price">$14.50</div>
+        </article>
+
+        <article class="card">
+          <div class="tag">Sensores</div>
+          <h3>Kit Sensores (10 piezas)</h3>
+          <div class="small">Temperatura, humedad, ultrasonido, LDR, PIR y más para tus proyectos.</div>
+          <div class="price">$19.00</div>
+        </article>
+
+        <article class="card">
+          <div class="tag">Módulos</div>
+          <h3>Módulo Relé 4CH</h3>
+          <div class="small">Controla dispositivos de AC/DC con tus placas de desarrollo.</div>
+          <div class="price">$8.50</div>
+        </article>
+
+        <article class="card">
+          <div class="tag">Accesorios</div>
+          <h3>Protoboard + Jumper</h3>
+          <div class="small">Montaje rápido para probar circuitos sin soldar.</div>
+          <div class="price">$6.20</div>
+        </article>
+
+        <article class="card">
+          <div class="tag">Fuentes</div>
+          <h3>Fuente 5V/3A</h3>
+          <div class="small">Suministro estable para tus proyectos de mayor consumo.</div>
+          <div class="price">$12.00</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="nosotros" style="margin-top:28px">
+      <div class="hero-card">
+        <h3>Sobre ConectaLab</h3>
+        <p class="small">Somos un equipo apasionado por la electrónica y el diseño de prototipos. Ofrecemos componentes seleccionados, soporte técnico y rápida atención por WhatsApp.</p>
+      </div>
+    </section>
+
+    <section id="contacto" style="margin-top:18px">
+      <div class="hero-card">
+        <h3>Contacto</h3>
+        <p class="small">¿Tienes dudas? Escríbenos por WhatsApp o revisa nuestras redes para novedades.</p>
+        <div style="margin-top:12px"><strong>Horario:</strong> Lun‑Sáb 8:00‑18:00</div>
+      </div>
+    </section>
+
+    <footer>
+      <div style="margin-top:18px">Más componentes próximamente</div>
+      <div style="margin-top:8px;color:var(--muted)">© ConectaLab — Todos los derechos reservados</div>
+    </footer>
+  </div>
+
+  <!-- SVG decor circuito (sutil) -->
+  <svg class="circuit-line" aria-hidden="true" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
+    <g fill="none" stroke="#9fbfdc" stroke-width="1.2">
+      <path d="M40 120 C180 10, 620 10, 760 120" />
+      <path d="M40 200 C180 90, 620 90, 760 200" />
+      <circle cx="120" cy="120" r="6" />
+      <circle cx="680" cy="120" r="6" />
+    </g>
+  </svg>
+
+  <!-- Botón WhatsApp flotante (sin carrito) -->
+<!-- Botón flotante de WhatsApp (versión original) -->
+<!-- Botón de WhatsApp perfectamente circular -->
+<!-- Botón de WhatsApp circular con iluminación -->
+<a class="whatsapp" 
+   href="https://wa.me/3174878241" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   aria-label="Contactar por WhatsApp">
+  <div class="whatsapp-circle">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+         alt="WhatsApp" 
+         class="whatsapp-icon" />
+  </div>
+</a>
+
+<style>
+.whatsapp {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+/* Círculo con iluminación suave */
+.whatsapp-circle {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #25d366 0%, #128c7e 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 0 10px rgba(37, 211, 102, 0.7),   /* brillo externo */
+    inset 0 0 10px rgba(255, 255, 255, 0.25); /* brillo interno */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Logo */
+.whatsapp-icon {
+  width: 34px;
+  height: 34px;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.7));
+}
+
+/* Efecto hover */
+.whatsapp:hover .whatsapp-circle {
+  transform: scale(1.1);
+  box-shadow: 
+    0 0 20px rgba(37, 211, 102, 0.9),
+    inset 0 0 12px rgba(255, 255, 255, 0.35);
+}
+</style>
+
+
+
+
+  <script>
+    // Pequeño detalle: efecto de foco en enlaces
+    document.querySelectorAll('a').forEach(a=>{a.addEventListener('mouseenter',()=>a.style.opacity=0.95);a.addEventListener('mouseleave',()=>a.style.opacity='')})
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Botón de WhatsApp perfectamente circular -->
+<a class="whatsapp" 
+   href="https://wa.me/3174878241" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   aria-label="Contactar por WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+       alt="WhatsApp" 
+       class="whatsapp-icon" />
+</a>
+
+<style>
+.whatsapp {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;  /* verde oficial */
+  border-radius: 50%;          /* círculo perfecto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;            /* evita bordes o esquinas */
+  border: none;
+}
+
+/* Logo blanco */
+.whatsapp-icon {
+  width: 34px;
+  height: 34px;
+}
+
+/* Efecto al pasar el mouse */
+.whatsapp:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+</style>
